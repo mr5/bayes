@@ -22,10 +22,10 @@ Training
   $tokenizer = new WhitespaceAndPunctuationTokenizer();
   $classifier = new Classifier($storage);
   
-  $classifier->lean('english', $tokenizer->tokenize('This is english'));
-  $classifier->lean('french', $tokenizer->tokenize('Je suis Hollandais'));
+  $classifier->learn('english', $tokenizer->tokenize('This is english'));
+  $classifier->learn('french', $tokenizer->tokenize('Je suis Hollandais'));
   
-  $probabilities = $classifier->classify(
+  $probabilities = $classifier->categoriesProbability(
       $tokenizer->tokenize('This is a naive bayes classifier')
   );
   

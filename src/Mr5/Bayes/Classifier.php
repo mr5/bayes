@@ -151,6 +151,20 @@ class Classifier
     }
 
     /**
+     * Classify given features.
+     *
+     * @param array $features Features to classify
+     *
+     * @return array
+     */
+    public function classify(array $features)
+    {
+        $probabilities = $this->categoriesProbability($features);
+
+        return array_slice($probabilities, 0, 1);
+    }
+
+    /**
      * Train classifier categorize given features to given category.
      *
      * @param string $category Category of features.
@@ -166,8 +180,8 @@ class Classifier
         foreach ($features as $feature) {
             $this->storage->increaseFeaturesCount();
             $this->storage->increaseFeatureCount($feature);
-            $this->storage->increaseFeaturesCountPerCategory($category);
-            $this->storage->increaseEachFeatureCountPerCategory($category, $feature);
+            $this->storage->increaseCategoryFeaturesCount($category);
+            $this->storage->increaseFeatureCountInCategory($category, $feature);
         }
     }
 }

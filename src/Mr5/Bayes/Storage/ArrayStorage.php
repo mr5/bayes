@@ -55,7 +55,7 @@ class ArrayStorage
      *
      * @param string $category Category to count
      */
-    public function increaseFeaturesCountPerCategory($category)
+    public function increaseCategoryFeaturesCount($category)
     {
         if (!isset($this->featuresCountPerCategory[$category])) {
             $this->featuresCountPerCategory[$category] = 0;
@@ -69,7 +69,7 @@ class ArrayStorage
      * @param string $category
      * @param string $feature
      */
-    public function increaseEachFeatureCountPerCategory($category, $feature)
+    public function increaseFeatureCountInCategory($category, $feature)
     {
         if (!isset($this->eachFeatureCountPerCategory[$category][$feature])) {
             $this->eachFeatureCountPerCategory[$category][$feature] = 0;
