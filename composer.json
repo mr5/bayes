@@ -1,0 +1,16 @@
+{
+  "name": "mr5/bayes",
+  "autoload": {
+    "psr-4": {
+      "Mr5\\Bayes\\": "src/Mr5/Bayes/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Mr5\\Bayes\\Tests\\": "tests/Mr5/Bayes/Tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.7"
+  }
+}
