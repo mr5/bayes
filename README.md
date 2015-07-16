@@ -25,7 +25,9 @@ Training
   $classifier->lean('english', $tokenizer->tokenize('This is english'));
   $classifier->lean('french', $tokenizer->tokenize('Je suis Hollandais'));
   
-  $probabilities = $classifier->classify($tokenizer->tokenize('This is a naive bayes classifier'));
+  $probabilities = $classifier->classify(
+      $tokenizer->tokenize('This is a naive bayes classifier')
+  );
   
   var_dump($probabilities);
 ```
