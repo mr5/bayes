@@ -20,4 +20,7 @@
         <const name="REDIS_SERVER_PORT" value="6379"/>
         <const name="REDIS_NAMESPACE" value="__mr5__unitTest___:bayes:"/>
     </php>
+    <logging>
+        <log type="coverage-clover" target="tmp/clover.xml"/>
+    </logging>
 </phpunit>
