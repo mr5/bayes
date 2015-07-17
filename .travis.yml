@@ -1,0 +1,19 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+services:
+  - redis-server
+
+before_script:
+  - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - travis_retry composer self-update
+  - travis_retry composer install --prefer-source --no-interaction --dev
+  - pyrus install pear/PHP_CodeSniffer
+  - phpenv rehash
+script:
+  - vendor/bin/phpunit --verbose
+  - phpcs --standard=PSR2 --extensions=php --ignore=vendor/* --warning-severity=0 ./
