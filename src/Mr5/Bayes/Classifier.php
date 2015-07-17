@@ -143,7 +143,7 @@ class Classifier
                 = round($this->categoryProbability($category, $features, 3), 4);
         }
         arsort($probabilities, SORT_NUMERIC);
-        var_dump($probabilities);
+
         return $probabilities;
     }
 

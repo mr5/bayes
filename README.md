@@ -1,5 +1,5 @@
 # Naive Bayes Classifier
-
+[![Quality score](https://scrutinizer-ci.com/g/mr5/bayes/badges/quality-score.png?b=master)
 ## Usage
 
 Add dependency to you composer.json.

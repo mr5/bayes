@@ -5,6 +5,10 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7
+  - hhvm
+  - nightly
+
 services:
   - redis-server
 
@@ -16,4 +20,4 @@ before_script:
   - phpenv rehash
 script:
   - vendor/bin/phpunit --verbose
-  - phpcs --standard=PSR2 --extensions=php --ignore=vendor/* --warning-severity=0 ./
+  - phpcs --standard=PSR2 --extensions=php --warning-severity=0 ./src

@@ -204,6 +204,4 @@ class RedisStorage implements StorageInterface
     {
         return $this->redis->hKeys($this->key('featuresCountPerCategory'));
     }
-
-
 }
