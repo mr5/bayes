@@ -49,6 +49,7 @@ class ArrayStorage implements StorageInterface
      * @var array
      */
     protected $eachFeatureCount = [];
+    protected $documentsCountPerFeatureInCategory = [];
 
     /**
      * {@inheritdoc}
@@ -59,56 +60,6 @@ class ArrayStorage implements StorageInterface
             $this->featuresCountPerCategory[$category] = 0;
         }
         $this->featuresCountPerCategory[$category]++;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseFeatureCountInCategory($category, $feature)
-    {
-        if (!isset($this->eachFeatureCountPerCategory[$category][$feature])) {
-            $this->eachFeatureCountPerCategory[$category][$feature] = 0;
-        }
-
-        $this->eachFeatureCountPerCategory[$category][$feature]++;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseDocumentsCount()
-    {
-        $this->documentsCount++;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseCategoryDocumentsCount($category)
-    {
-        if (!isset($this->documentsCountPerCategory[$category])) {
-            $this->documentsCountPerCategory[$category] = 0;
-        }
-        $this->documentsCountPerCategory[$category]++;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseFeaturesCount()
-    {
-        $this->featuresCount++;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseFeatureCount($feature)
-    {
-        if (!isset($this->eachFeatureCount[$feature])) {
-            $this->eachFeatureCount[$feature] = 0;
-        }
-        $this->eachFeatureCount[$feature]++;
     }
 
     /**
@@ -126,6 +77,18 @@ class ArrayStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
+    public function increaseFeatureCountInCategory($category, $feature)
+    {
+        if (!isset($this->eachFeatureCountPerCategory[$category][$feature])) {
+            $this->eachFeatureCountPerCategory[$category][$feature] = 0;
+        }
+
+        $this->eachFeatureCountPerCategory[$category][$feature]++;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getFeatureCountInCategory($category, $feature)
     {
         if (!isset($this->eachFeatureCountPerCategory[$category][$feature])) {
@@ -138,9 +101,28 @@ class ArrayStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
+    public function increaseDocumentsCount()
+    {
+        $this->documentsCount++;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getDocumentsCount()
     {
         return $this->documentsCount;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function increaseCategoryDocumentsCount($category)
+    {
+        if (!isset($this->documentsCountPerCategory[$category])) {
+            $this->documentsCountPerCategory[$category] = 0;
+        }
+        $this->documentsCountPerCategory[$category]++;
     }
 
     /**
@@ -158,9 +140,28 @@ class ArrayStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
+    public function increaseFeaturesCount()
+    {
+        $this->featuresCount++;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getFeaturesCount()
     {
         return $this->featuresCount;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function increaseFeatureCount($feature)
+    {
+        if (!isset($this->eachFeatureCount[$feature])) {
+            $this->eachFeatureCount[$feature] = 0;
+        }
+        $this->eachFeatureCount[$feature]++;
     }
 
     /**
@@ -173,6 +174,30 @@ class ArrayStorage implements StorageInterface
         }
 
         return $this->eachFeatureCount[$feature];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function increaseFeatureDocumentsCountInCategory($category, $feature)
+    {
+        if (!isset($this->documentsCountPerFeatureInCategory[$category][$feature])) {
+            $this->documentsCountPerFeatureInCategory[$category][$feature] = 0;
+        }
+
+        $this->documentsCountPerFeatureInCategory[$category][$feature]++;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFeatureDocumentsCountInCategory($category, $feature)
+    {
+        if (!isset($this->documentsCountPerFeatureInCategory[$category][$feature])) {
+            return 0;
+        }
+
+        return $this->documentsCountPerFeatureInCategory[$category][$feature];
     }
 
     /**

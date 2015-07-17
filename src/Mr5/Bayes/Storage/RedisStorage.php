@@ -59,47 +59,6 @@ class RedisStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
-    public function increaseFeatureCountInCategory($category, $feature)
-    {
-        $redisKey = $this->key('eachFeatureCountPerCategory:' . $category);
-        $this->redis->hIncrBy($redisKey, $feature, 1);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseDocumentsCount()
-    {
-        $this->redis->incr($this->key('documentsCount'));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseCategoryDocumentsCount($category)
-    {
-        $this->redis->hIncrBy($this->key('documentsCountPerCategory'), $category, 1);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseFeaturesCount()
-    {
-        $this->redis->incr($this->key('featuresCount'));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function increaseFeatureCount($feature)
-    {
-        $this->redis->hIncrBy($this->key('eachFeatureCount'), $feature, 1);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getCategoryFeaturesCount($category)
     {
 
@@ -109,6 +68,15 @@ class RedisStorage implements StorageInterface
         }
 
         return $this->redis->hGet($redisKey, $category);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function increaseFeatureCountInCategory($category, $feature)
+    {
+        $redisKey = $this->key('eachFeatureCountPerCategory:' . $category);
+        $this->redis->hIncrBy($redisKey, $feature, 1);
     }
 
     /**
@@ -131,6 +99,14 @@ class RedisStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
+    public function increaseDocumentsCount()
+    {
+        $this->redis->incr($this->key('documentsCount'));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getDocumentsCount()
     {
         $redisKey = $this->key('documentsCount');
@@ -144,6 +120,14 @@ class RedisStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
+    public function increaseCategoryDocumentsCount($category)
+    {
+        $this->redis->hIncrBy($this->key('documentsCountPerCategory'), $category, 1);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCategoryDocumentsCount($category)
     {
         $redisKey = $this->key('documentsCountPerCategory');
@@ -152,6 +136,14 @@ class RedisStorage implements StorageInterface
         }
 
         return $this->redis->hGet($redisKey, $category);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function increaseFeaturesCount()
+    {
+        $this->redis->incr($this->key('featuresCount'));
     }
 
     /**
@@ -171,6 +163,14 @@ class RedisStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
+    public function increaseFeatureCount($feature)
+    {
+        $this->redis->hIncrBy($this->key('eachFeatureCount'), $feature, 1);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getFeatureCount($feature)
     {
         $redisKey = $this->key('eachFeatureCount');
@@ -184,8 +184,26 @@ class RedisStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
+    public function increaseFeatureDocumentsCountInCategory($category, $feature)
+    {
+        // TODO: Implement increaseFeatureDocumentsCountInCategory() method.
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFeatureDocumentsCountInCategory($category, $feature)
+    {
+        // TODO: Implement getFeatureDocumentsCountInCategory() method.
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCategories()
     {
         return $this->redis->hKeys($this->key('featuresCountPerCategory'));
     }
+
+
 }

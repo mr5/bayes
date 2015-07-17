@@ -13,8 +13,6 @@ namespace Mr5\Bayes\Storage;
  */
 interface StorageInterface
 {
-
-
     /**
      * Increase count of given category .
      *
@@ -23,6 +21,15 @@ interface StorageInterface
      * @return void
      */
     public function increaseCategoryFeaturesCount($category);
+
+    /**
+     * Get total count of all features in given category.
+     *
+     * @param string $category Category for counting.
+     *
+     * @return int
+     */
+    public function getCategoryFeaturesCount($category);
 
     /**
      * Increase count of given feature in given category.
@@ -35,11 +42,28 @@ interface StorageInterface
     public function increaseFeatureCountInCategory($category, $feature);
 
     /**
+     * Get count of given feature in given category.
+     *
+     * @param string $category Category for counting
+     * @param string $feature  Feature for counting
+     *
+     * @return int
+     */
+    public function getFeatureCountInCategory($category, $feature);
+
+    /**
      * Increase total count of documents.
      *
      * @return void
      */
     public function increaseDocumentsCount();
+
+    /**
+     * Get total count of all documents.
+     *
+     * @return int
+     */
+    public function getDocumentsCount();
 
     /**
      * Increase documents count of given category.
@@ -51,11 +75,27 @@ interface StorageInterface
     public function increaseCategoryDocumentsCount($category);
 
     /**
+     * Get total count of documents with given category.
+     *
+     * @param string $category Category for counting
+     *
+     * @return int
+     */
+    public function getCategoryDocumentsCount($category);
+
+    /**
      * Increase total count of all features.
      *
      * @return void
      */
     public function increaseFeaturesCount();
+
+    /**
+     * Get total count of all features.
+     *
+     * @return int
+     */
+    public function getFeaturesCount();
 
     /**
      * Increase count of given feature.
@@ -67,46 +107,24 @@ interface StorageInterface
     public function increaseFeatureCount($feature);
 
     /**
-     * Get total count of all features in given category.
-     *
-     * @param string $category Category for counting.
-     *
-     * @return int
-     */
-    public function getCategoryFeaturesCount($category);
-
-    /**
-     * Get count of given feature in given category.
+     * Get documents count of given feature in given category.
      *
      * @param string $category Category for counting
      * @param string $feature  Feature for counting
      *
      * @return int
      */
-    public function getFeatureCountInCategory($category, $feature);
+    public function getFeatureDocumentsCountInCategory($category, $feature);
 
     /**
-     * Get total count of all documents.
-     *
-     * @return int
-     */
-    public function getDocumentsCount();
-
-    /**
-     * Get total count of documents with given category.
+     * Increase documents count of given feature in given category.
      *
      * @param string $category Category for counting
+     * @param string $feature  Feature for counting
      *
-     * @return int
+     * @return void
      */
-    public function getCategoryDocumentsCount($category);
-
-    /**
-     * Get total count of all features.
-     *
-     * @return int
-     */
-    public function getFeaturesCount();
+    public function increaseFeatureDocumentsCountInCategory($category, $feature);
 
     /**
      * Get count of given feature.

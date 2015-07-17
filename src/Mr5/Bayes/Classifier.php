@@ -50,7 +50,7 @@ class Classifier
         }
         // P(category|feature) = P(feature|category) * P(category)  /
         // P(feature|category) * P(category) +
-        // (1 - P(feature|category)) * (1 - P(category))
+        // ( P(feature|otherCategories) * P(otherCategories))
 
         // P(feature|category)
         // = feature frequency in category / all features in category
@@ -60,8 +60,8 @@ class Classifier
         $categoryFeaturesCount = $this->storage->getCategoryFeaturesCount($category);
         // P(feature|category)
         $featureCategoryProbability
-            = $featureCountInCategory
-            / $categoryFeaturesCount;
+            = $this->storage->getFeatureDocumentsCountInCategory($category, $feature)
+            / $this->storage->getCategoryDocumentsCount($category);
 
 
         if ($featureCategoryProbability == 0) {
@@ -143,7 +143,7 @@ class Classifier
                 = round($this->categoryProbability($category, $features, 3), 4);
         }
         arsort($probabilities, SORT_NUMERIC);
-
+        var_dump($probabilities);
         return $probabilities;
     }
 
@@ -157,7 +157,7 @@ class Classifier
     public function classify(array $features)
     {
         $probabilities = $this->categoriesProbability($features);
-        var_dump($probabilities);
+
         return array_keys(array_slice($probabilities, 0, 1))[0];
     }
 
@@ -173,7 +173,13 @@ class Classifier
     {
         $this->storage->increaseDocumentsCount();
         $this->storage->increaseCategoryDocumentsCount($category);
-
+        $uniqueFeatures = array_unique($features);
+        foreach ($uniqueFeatures as $uniqueFeature) {
+            $this->storage->increaseFeatureDocumentsCountInCategory(
+                $category,
+                $uniqueFeature
+            );
+        }
         foreach ($features as $feature) {
             $this->storage->increaseFeaturesCount();
             $this->storage->increaseFeatureCount($feature);
