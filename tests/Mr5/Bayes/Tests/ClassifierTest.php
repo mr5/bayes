@@ -3,6 +3,7 @@ namespace Mr5\Bayes\Tests;
 
 use Mr5\Bayes\Classifier;
 use Mr5\Bayes\Storage\ArrayStorage;
+use Mr5\Bayes\Storage\RedisStorage;
 use Mr5\Bayes\Tokenizer\WhitespaceAndPunctuationTokenizer;
 
 class ClassifierTest extends \PHPUnit_Framework_TestCase
@@ -24,7 +25,10 @@ class ClassifierTest extends \PHPUnit_Framework_TestCase
     public function testClassify()
     {
         $tokenizer = new WhitespaceAndPunctuationTokenizer();
-        $this->classifier = new Classifier(new ArrayStorage());
+        $redis = new \Redis();
+        $redis->connect('localhost');
+        $storage = new RedisStorage($redis);
+        $this->classifier = new Classifier($storage);
 
         $textsToLean = [
             '骂人' => [

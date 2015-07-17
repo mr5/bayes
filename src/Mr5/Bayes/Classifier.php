@@ -2,7 +2,7 @@
 
 namespace Mr5\Bayes;
 
-use Mr5\Bayes\Storage\ArrayStorage;
+use Mr5\Bayes\Storage\StorageInterface;
 
 /**
  * Classifier
@@ -18,7 +18,7 @@ class Classifier
     /**
      * Array storage
      *
-     * @var ArrayStorage
+     * @var StorageInterface
      */
     protected $storage;
 
@@ -26,9 +26,9 @@ class Classifier
     /**
      * Constructor.
      *
-     * @param ArrayStorage $storage Storage for
+     * @param StorageInterface $storage Storage for
      */
-    public function __construct(ArrayStorage $storage)
+    public function __construct(StorageInterface $storage)
     {
         $this->storage = $storage;
     }

@@ -11,7 +11,7 @@ namespace Mr5\Bayes\Storage;
  * @license  MIT <http://github.com/mr5/bayes/LICENSE.md>
  * @link     http://github.com/mr5/bayes
  */
-class ArrayStorage
+class ArrayStorage implements StorageInterface
 {
     /**
      * Total features count in per category.
@@ -51,9 +51,7 @@ class ArrayStorage
     protected $eachFeatureCount = [];
 
     /**
-     * Increase count of given category .
-     *
-     * @param string $category Category to count
+     * {@inheritdoc}
      */
     public function increaseCategoryFeaturesCount($category)
     {
@@ -64,10 +62,7 @@ class ArrayStorage
     }
 
     /**
-     * Increase count of given feature in given category.
-     *
-     * @param string $category
-     * @param string $feature
+     * {@inheritdoc}
      */
     public function increaseFeatureCountInCategory($category, $feature)
     {
@@ -79,7 +74,7 @@ class ArrayStorage
     }
 
     /**
-     * Increase total count of documents.
+     * {@inheritdoc}
      */
     public function increaseDocumentsCount()
     {
@@ -87,9 +82,7 @@ class ArrayStorage
     }
 
     /**
-     * Increase documents count of given category.
-     *
-     * @param string $category Category for documents counting.
+     * {@inheritdoc}
      */
     public function increaseCategoryDocumentsCount($category)
     {
@@ -100,7 +93,7 @@ class ArrayStorage
     }
 
     /**
-     * Increase total count of all features.
+     * {@inheritdoc}
      */
     public function increaseFeaturesCount()
     {
@@ -108,9 +101,7 @@ class ArrayStorage
     }
 
     /**
-     * Increase count of given feature.
-     *
-     * @param string $feature Feature fo counting
+     * {@inheritdoc}
      */
     public function increaseFeatureCount($feature)
     {
@@ -121,11 +112,7 @@ class ArrayStorage
     }
 
     /**
-     * Get total count of all features in given category.
-     *
-     * @param string $category Category for counting.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getCategoryFeaturesCount($category)
     {
@@ -137,12 +124,7 @@ class ArrayStorage
     }
 
     /**
-     * Get count of given feature in given category.
-     *
-     * @param string $category Category for counting
-     * @param string $feature  Feature for counting
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getFeatureCountInCategory($category, $feature)
     {
@@ -154,9 +136,7 @@ class ArrayStorage
     }
 
     /**
-     * Get total count of all documents.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getDocumentsCount()
     {
@@ -164,11 +144,7 @@ class ArrayStorage
     }
 
     /**
-     * Get total count of documents with given category.
-     *
-     * @param string $category Category for counting
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getCategoryDocumentsCount($category)
     {
@@ -180,9 +156,7 @@ class ArrayStorage
     }
 
     /**
-     * Get total count of all features.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getFeaturesCount()
     {
@@ -190,11 +164,7 @@ class ArrayStorage
     }
 
     /**
-     * Get count of given feature.
-     *
-     * @param string $feature Feature fo counting
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getFeatureCount($feature)
     {
@@ -206,9 +176,7 @@ class ArrayStorage
     }
 
     /**
-     * Get all categories.
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getCategories()
     {
