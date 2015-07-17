@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/mr5/bayes.svg)](https://travis-ci.org/mr5/bayes)
 [![Quality score](https://scrutinizer-ci.com/g/mr5/bayes/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mr5/bayes/) 
 [![License](https://poser.pugx.org/mr5/bayes/license.svg)](https://packagist.org/packages/mr5/bayes)
-
+[![Coverage Status](https://coveralls.io/repos/mr5/bayes/badge.svg?branch=master&service=github)](https://coveralls.io/github/mr5/bayes?branch=master)
 ## Usage
 
 Add dependency to you composer.json.
