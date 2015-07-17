@@ -14,6 +14,10 @@ before_script:
   - travis_retry composer install --prefer-source --no-interaction --dev
   - pyrus install pear/PHP_CodeSniffer
   - phpenv rehash
+
 script:
   - vendor/bin/phpunit --verbose
   - phpcs --standard=PSR2 --extensions=php --warning-severity=0 ./src
+
+after_script:
+  - ./vendor/bin/coveralls -v
