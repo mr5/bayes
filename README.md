@@ -1,5 +1,9 @@
 # Naive Bayes Classifier
-[![Quality score](https://scrutinizer-ci.com/g/mr5/bayes/badges/quality-score.png?b=master)
+
+[![Build Status](https://travis-ci.org/mr5/bayes.svg)](https://travis-ci.org/mr5/bayes)
+[![Quality score](https://scrutinizer-ci.com/g/mr5/bayes/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mr5/bayes/) 
+[![License](https://poser.pugx.org/mr5/bayes/license.svg)](https://packagist.org/packages/mr5/bayes)
+
 ## Usage
 
 Add dependency to you composer.json.

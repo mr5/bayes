@@ -1,5 +1,19 @@
 {
   "name": "mr5/bayes",
+  "description": "Naive bayes classifier.",
+  "keywords": [
+    "bayes",
+    "anti spam",
+    "machine learning"
+  ],
+  "authors": [
+    {
+      "name": "Decent Woo",
+      "email": "mr5.simple@gmail.com",
+      "homepage": "http://mr-5.cn"
+    }
+  ],
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Mr5\\Bayes\\": "src/Mr5/Bayes/"
