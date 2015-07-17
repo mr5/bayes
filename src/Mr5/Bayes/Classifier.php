@@ -140,10 +140,7 @@ class Classifier
         $probabilities = [];
         foreach ($this->storage->getCategories() as $category) {
             $probabilities[$category]
-                = round(
-                    $this->categoryProbability($category, $features, 3),
-                    4
-                ) * 100;
+                = round($this->categoryProbability($category, $features, 3), 4);
         }
         arsort($probabilities, SORT_NUMERIC);
 
@@ -160,8 +157,8 @@ class Classifier
     public function classify(array $features)
     {
         $probabilities = $this->categoriesProbability($features);
-
-        return array_slice($probabilities, 0, 1);
+        var_dump($probabilities);
+        return array_keys(array_slice($probabilities, 0, 1))[0];
     }
 
     /**

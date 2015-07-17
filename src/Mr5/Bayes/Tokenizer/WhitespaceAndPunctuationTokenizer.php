@@ -13,7 +13,7 @@ namespace Mr5\Bayes\Tokenizer;
  */
 class WhitespaceAndPunctuationTokenizer implements TokenizerInterface
 {
-    protected $pattern = "/[ ，。、；：,.?!-:;\\n\\r\\t…_]/u";
+    protected $pattern = "/[ ，。、；：？,.?!-:;\\n\\r\\t…_]/u";
 
     /**
      * {@inheritdoc}

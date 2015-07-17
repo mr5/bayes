@@ -3,7 +3,7 @@ namespace Mr5\Bayes\Tests;
 
 use Mr5\Bayes\Classifier;
 use Mr5\Bayes\Storage\ArrayStorage;
-use Mr5\Bayes\Storage\RedisStorage;
+use Mr5\Bayes\Tokenizer\TokenizerInterface;
 use Mr5\Bayes\Tokenizer\WhitespaceAndPunctuationTokenizer;
 
 class ClassifierTest extends \PHPUnit_Framework_TestCase
@@ -12,74 +12,73 @@ class ClassifierTest extends \PHPUnit_Framework_TestCase
      * @var Classifier
      */
     protected $classifier;
+    /**
+     * @var TokenizerInterface
+     */
+    protected $tokenizer;
 
     public function setUp()
     {
-//        $storage = new ArrayStorage();
-//        $tokenizer = new WhitespaceAndPunctuationTokenizer();
-//        $this->classifier = new Classifier(
-//            $storage, $tokenizer
-//        );
-    }
+        $storage = new ArrayStorage();
+        $this->tokenizer = new WhitespaceAndPunctuationTokenizer();
+        $this->classifier = new Classifier(
+            $storage
+        );
 
-    public function testClassify()
-    {
-        $tokenizer = new WhitespaceAndPunctuationTokenizer();
-        $redis = new \Redis();
-        $redis->connect('localhost');
-        $storage = new RedisStorage($redis);
-        $this->classifier = new Classifier($storage);
-
-        $textsToLean = [
-            '骂人' => [
-                '你 就 是 个 傻逼， 傻屄。去 你妈逼 的'
-            ],
-            '政治敏感' => [
-                '蛤蟆 出山',
-                '九评 共产党， 退党 保 平安'
-            ],
-            '广告' => [
-                '我 叫 大田金银，来自 香港，喜欢 黄金，喜欢 代理商，是 香港 金银 贸易场 202 号 AA 类 会员，我 会 给 代理商 最高 的 返佣，我 会 给 代理商 最快 的 返佣 速度，请 支持 我，想要 更好 的 了解 我 就 加 我 扣扣 QQ  ～ 123456'
-            ],
-            '正常' => [
-                '这个 预期值 就 是 让 世界 各地 的 美元 准备 回流 美国'
-            ],
-            'positive' => [
-                'amazing, awesome movie!! Yeah!! Oh boy.',
-                'Sweet, this is incredibly, amazing, perfect, great!!'
-            ],
-            'negative' => [
-                'terrible, shitty thing. Damn. Sucks!!'
-            ],
-            'english' => [
-                'This is english',
-            ],
-            'french' => [
-                'Je suis Hollandais'
-            ]
-        ];
-        foreach ($textsToLean as $category => $texts) {
+        foreach ($this->trainingData() as $category => $texts) {
             foreach ($texts as $text) {
-                $this->classifier->learn($category, $tokenizer->tokenize($text));
+                $this->classifier->learn(
+                    $category,
+                    $this->tokenizer->tokenize($text)
+                );
             }
         }
-        $textsToClassify = [
-            'This is a naive bayes classifier',
-            'awesome, cool, amazing!! Yay.',
-            '加息 这个 预期， 下跌 应该 是 套牢 想要 回流 的 美元',
-            '你妈逼 喜欢 黄金， 加 我 扣扣 123456',
-            '今天 我 买了 一个 蛤蟆，它 快 出山 了',
-            '法轮 大法 好， 退党 保 平安',
-            '黄金 会员 代理商 加 我 QQ 123456',
-            '我 叫 大田金银，来自 香港，喜欢 黄金，喜欢 代理商，是 香港 金银 贸易场 202 号 AA 类 会员，我 会 给 代理商 最高 的 返佣，我 会 给 代理商 最快 的 返佣 速度，请 支持 我，想要 更好 的 了解 我 就 加 我 扣扣 QQ  ～ 123456'
+    }
+
+    /**
+     *
+     * @dataProvider classifyDataProvider
+     * @return void
+     */
+    public function testClassify($expectedCategory, $text)
+    {
+        $this->assertEquals(
+            $expectedCategory,
+            $this->classifier->classify($this->tokenizer->tokenize($text))
+        );
+    }
+
+    public function classifyDataProvider()
+    {
+        return [
+            ['en', 'scientific problems and the need'],
+            ['fr', 'D\'icône de la cause des femmes à celui de renégate'],
+            ['es', 'Un importante punto de inflexión en la historia de la ciencia filosófica primitiva']
         ];
-        foreach ($textsToClassify as $text) {
-            var_dump($text);
-            var_dump(
-                $this->classifier->categoriesProbability($tokenizer->tokenize($text))
-            );
-        }
+    }
 
-
+    protected function trainingData()
+    {
+        return [
+            'fr' =>
+                [
+                    "L'Italie a été gouvernée pendant un an par un homme qui n'avait pas été élu par le peuple. Dès la nomination de Mario Monti au poste de président du conseil, fin 2011, j'avais dit :Attention, c'est prendre un risque politique majeur. Par leur vote, les Italiens n'ont pas seulement adressé un message à leurs élites nationales, ils ont voulu dire : Nous, le peuple, nous voulons garder la maîtrise de notre destin. Et ce message pourrait être envoyé par n'importe quel peuple européen, y compris le peuple français.",
+                    "Il en faut peu, parfois, pour passer du statut d'icône de la cause des femmes à celui de renégate. Lorsqu'elle a été nommée à la tête de Yahoo!, le 26 juillet 2012, Marissa Mayer était vue comme un modèle. Elle montrait qu'il était possible de perforer le fameux plafond de verre, même dans les bastions les mieux gardés du machisme (M du 28 juillet 2012). A 37 ans, cette brillante diplômée de Stanford, formée chez Google, faisait figure d'exemple dans la Silicon Valley californienne, où moins de 5 % des postes de direction sont occupés par des femmes. En quelques mois, le symbole a beaucoup perdu de sa puissance.",
+                    "Premier intervenant de taille à SXSW 2013, Bre Pettis, PDG de la société Makerbot, spécialisée dans la vente d'imprimantes 3D, a posé une question toute simple, avant de dévoiler un nouveau produit qui l'est un peu moins. Voulez-vous rejoindre notre environnement 3D ?, a-t-il demandé à la foule qui débordait de l'Exhibit Hall 5 du Convention Center.",
+                    "Des milliers de manifestants ont défilé samedi 9 mars à Tokyo pour exiger l'abandon rapide de l'énergie nucléaire au Japon, près de deux ans jour pour jour après le début de la catastrophe de Fukushima.",
+                ],
+            'es' =>
+                [
+                    "El ex presidente sudafricano, Nelson Mandela, ha sido hospitalizado la tarde del sábado, según confirmó un hospital de Pretoria a CNN. Al parecer se trata de un chequeo médico que ya estaba previsto, relacionado con su avanzada edad, según explicó el portavoz de la presidencia Sudafricana Mac Maharaj.",
+                    'Guerras continuas y otros problemas llevaron finalmente a un estado de disminución. Las invasiones napoleónicas de España llevaron al caos, lo que provocó los movimientos de independencia que destrozaron la mayor parte del imperio y abandonaron el país políticamente inestable',
+                    'En el uso moderno, la "ciencia" a menudo se refiere a una forma de perseguir el conocimiento, no sólo el conocimiento mismo. También se suele restringirse a las ramas de estudio que tratan de explicar los fenómenos del universo material. [6] En los siglos 17 y 18 científicos cada vez más solicitados para formular el conocimiento en términos de las leyes de la naturaleza, tales como las leyes del movimiento de Newton. Y en el transcurso del siglo 19, la palabra "ciencia" se hizo cada vez más asociada con el método científico en sí, como una manera disciplinada para estudiar el mundo natural, incluyendo la física, la química, la geología y la biología',
+                    'Un importante punto de inflexión en la historia de la ciencia filosófica primitiva fue el intento controversial pero exitoso por Sócrates para aplicar la filosofía al estudio de los seres humanos, incluyendo la naturaleza humana, la naturaleza de las comunidades políticas, y el conocimiento humano en sí. Criticó el tipo más antiguo de estudio de la física como demasiado puramente especulativo y carente de autocrítica. Se mostró especialmente preocupado de que algunos de los primeros físicos trataron la naturaleza como si pudiera ser asumido que no tenía orden inteligente, explicando las cosas sólo en términos de movimiento y la materia.',
+                ],
+            'en' =>
+                [
+                    "Other possible reasons have been proposed for the lengthy research in the progress of strong AI. The intricacy of scientific problems and the need to fully understand the human brain through psychology and neurophysiology have limited many researchers from emulating the function of the human brain into a computer hardware.",
+                    "There have been many AI researchers that debate over the idea whether machines should be created with emotions. There are no emotions in typical models of AI and some researchers say programming emotions into machines allows them to have a mind of their own.",
+                ]
+        ];
     }
 }
